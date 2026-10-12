@@ -66,19 +66,12 @@ zypper -n dup --from packman --allow-vendor-change
 zypper -n in --allow-vendor-change \
     # System
     git gh btop ddcutil brightnessctl scrcpy dotnet android-tools ffmpeg qemu ovmf playerctl fastfetch seatd fish jq bc \
-    # Network
     NetworkManager NetworkManager-applet \
-    # Audio
     pipewire pipewire-pulseaudio pipewire-alsa wireplumber \
-    # DE
     hyprland hyprlock hyprpaper waybar waypaper wofi polkit SwayNotificationCenter \
-    # Шрифты
     fontawesome-fonts google-noto-sans-fonts adwaita-fonts \
-    # Приложения
     dolphin pavucontrol-qt foot neovim Gapless vlc pinta krita audacity onlyoffice-desktop-editors FreeCAD inkscape keepassxc anki gnome-disk-utility filelight portprotonqt \
-    # Оформление и темы
-    adw-gtk3 papirus-icon-theme nwg-look darkly qt5ct qt6ct \
-    # Порталы рабочего стола и системные утилиты
+    adw-gtk3 papirus-icon-theme nwg-look darkly qt5ct qt6ct  \
     xdg-desktop-portal-hyprland xdg-desktop-portal-gtk \
     libqt5-qtwayland qt6-wayland
 
