@@ -1,0 +1,94 @@
+@define-color bg-panel      #141318;
+@define-color font-color    #e6e1e9;
+@define-color font-color-inv #141318;
+@define-color podium        #2b292f;
+@define-color accent        #cabeff;
+@define-color butt-hover    #48454e;
+
+* {
+    unset: all;
+    outline: none;
+}
+
+window {
+    margin: 1px;
+    border: none;
+    border-radius: 12px;
+    background: transparent;
+    position: relative;
+}
+
+/* Ввод */
+#input {
+margin: 8px;
+padding: 0px 10px 0px 10px;
+border: none;
+border-radius: 8px;
+background-color: @podium;
+color: @font-color;
+}
+
+
+#outer-box {
+background-color: @bg-panel;
+border-radius: 12px;
+}
+
+/* Основные контейнеры */
+#inner-box {
+margin: 6px;
+background: transparent;
+background-color: transparent;
+border-radius: 12px;
+border: none;
+}
+
+#input:focus {
+border: 1px solid @accent;
+box-shadow: none;
+}
+
+/* Прокрутка */
+#scroll {
+margin: 0px 2px 4px 2px;
+border: none;
+border-radius: 8px;
+background: transparent;
+}
+
+scrollbar {
+    background: transparent;
+}
+
+scrollbar slider {
+    background-color: @font-color;
+    border-radius: 6px;
+}
+
+scrollbar slider:hover,
+scrollbar slider:active {
+    background-color: @font-color;
+}
+
+/* Текст элементов */
+#text {
+margin: 6px;
+color: @font-color;
+}
+
+#entry {
+background-color: @bg-panel;
+margin: 0px;
+padding: 4px 0px 4px 8px;
+border-radius: 8px;
+}
+
+#entry:selected {
+background-color: @podium;
+padding: 4px 0px 4px 8px;
+border-radius: 8px;
+}
+
+#text:selected {
+color: @font-color;
+}

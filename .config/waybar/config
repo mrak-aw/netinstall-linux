@@ -1,0 +1,109 @@
+{
+    "position": "top",
+    "height": 38,
+    "width": 0,
+    "margin-top": 0,
+    "margin-left": 0,
+    "margin-right": 0,
+    "margin-bottom": 0,
+    "layer": "overlay",
+    "spacing": 0,
+
+    "modules-left": ["wlr/taskbar", "mpris",],
+    "modules-center": ["ext/workspaces"],
+    "modules-right": ["tray", "pulseaudio", "backlight", "custom/ddc-brightness", "battery", "custom/notifications", "hyprland/language", "clock", "custom/right"],
+
+    "wlr/taskbar": {
+        "format": "{icon}",
+        "on-click": "activate",
+        "on-click-middle": "close"
+    },
+
+    "ext/workspaces": {
+        "format": "{icon}",
+        "sort-by-number": true,
+        "on-click": "activate",
+        "all-outputs": true,
+        "on-scroll-up": "hyprctl eval 'hl.dispatch(hl.dsp.focus{workspace=\"+1\"})'",
+        "on-scroll-down": "hyprctl eval 'hl.dispatch(hl.dsp.focus{workspace=\"-1\"})'",
+    },
+
+    "mpris": {
+        "format": "{dynamic}",
+
+        "dynamic-order": ["title"],
+        "dynamic-importance-order": ["title"],
+        "dynamic-len": 25,
+
+        "tooltip-format": "Track: {artist} — {title}\nAlbum: {album}\nState: {status}",
+
+        "on-click": "playerctl play-pause",
+        "on-click-middle": "playerctl previous",
+        "on-click-right": "playerctl next",
+        "scroll-step": 5.0,
+        "on-scroll-up": "playerctl volume 0.05+",
+        "on-scroll-down": "playerctl volume 0.05-"
+    },
+
+    "tray": {
+    },
+
+    "pulseaudio": {
+        "scroll-step": 5,
+        "format": "{icon} {volume}%",
+        "format-muted": "\uf6a9",
+        "format-icons": {
+            "default": ["\uf027", "\uf6a8", "\uf028"]
+        },
+        "on-click": "pavucontrol-qt"
+    },
+
+    "backlight": {
+        "device": "intel_backlight",
+        "format": "☀ {percent}%",
+        "on-scroll-up": "brightnessctl set +10%",
+        "on-scroll-down": "brightnessctl set 10%-"
+    },
+
+    "custom/ddc-brightness": {
+        "exec-if": "ddcutil getvcp 10 >/dev/null 2>&1",
+        "exec": "v=$(ddcutil getvcp 10 2>/dev/null | grep -oP 'current value =\\s*\\K[0-9]+' || echo '?'); printf '{\"text\": \"☀ %s%%\"}' \"$v\"",
+        "return-type": "json",
+        "interval": 10,
+        "tooltip": false,
+        "signal": 8,
+        "on-scroll-up": "$HOME/.config/waybar/scripts/ddc-scroll.sh 10",
+        "on-scroll-down": "$HOME/.config/waybar/scripts/ddc-scroll.sh -10"
+    },
+
+    "hyprland/language": {
+        "format": "{}",
+        "format-en": "EN",
+        "format-ru": "RU"
+    },
+
+    "custom/notifications": {
+        "format": "\uf0f3",
+        "tooltip": false,
+        "on-click": "swaync-client -t -sw"
+    },
+
+    "clock": {
+        "format": "{:%H:%M}",
+        "format-alt": "{:%Y-%m-%d}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+
+    "battery": {
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 20
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": "\ue55b {capacity}%",
+        "format-plugged": "\uf1e6 {capacity}%",
+        "format-alt": "{icon} {time}",
+        "format-icons": ["\uf244", "\uf243", "\uf242", "\uf241", "\uf240",]
+    }
+}

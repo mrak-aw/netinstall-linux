@@ -1,0 +1,17 @@
+[Common]
+CornerRadius=8
+FancyMargins=false
+ShadowSize=ShadowNone
+ShadowStrength=50
+
+[Style]
+AnimationsEnabled=false
+DisableDolphinUrlNavigatorBackground=false
+MnemonicsMode=MN_ALWAYS
+RoundedRubberBandFrame=false
+ViewDrawFocusIndicator=false
+WidgetDrawShadow=false
+
+[Windeco]
+AnimationsEnabled=false
+OtherCornerRadius=8

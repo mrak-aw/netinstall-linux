@@ -1,0 +1,6 @@
+@define-color bg-panel      {{colors.surface.default.hex}};
+@define-color font-color    {{colors.on_surface.default.hex}};
+@define-color font-color-inv {{colors.surface.default.hex}};
+@define-color podium        {{colors.surface_container_high.default.hex}};
+@define-color accent        {{colors.primary.default.hex}};
+@define-color butt-hover    {{colors.surface_variant.default.hex}};

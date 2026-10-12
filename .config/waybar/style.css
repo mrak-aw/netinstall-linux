@@ -1,0 +1,224 @@
+@import url("colors.css");
+
+* {
+	all: unset;
+	font-family: "Noto Sans", "Font Awesome 6 Free Solid";
+}
+
+window#waybar {
+	background-color: @bg-panel;
+	border: none;
+	border-radius: 0px;
+	font-size: 16pt;
+	font-weight: 500;
+	transition-property: background-color;
+	transition-duration: .5s;
+}
+
+menu {
+	background-color: @bg-panel;
+	border: 1px solid @podium;
+	border-radius: 12px;
+	font-size: 80%;
+	padding: 6px;
+}
+
+menu menuitem {
+	background-color: transparent;
+	color: @font-color;
+	padding: 4px 10px;
+	border-radius: 8px;
+}
+
+menu menuitem:hover {
+	background-color: @butt-hover;
+	color: @font-color;
+}
+
+menu menuitem arrow {
+	color: @font-color;
+	min-width: 16px;
+	min-height: 16px;
+	-gtk-icon-source: -gtk-icontheme("pan-end-symbolic");
+}
+
+menu menuitem:hover arrow {
+	color: @font-color;
+}
+
+menu separator {
+	background-color: @podium;
+	min-height: 1px;
+	margin: 4px 10px;
+}
+
+tooltip {
+	background-color: @bg-panel;
+	border-radius: 12px;
+	padding: 4px;
+}
+
+tooltip label,
+#tooltip label,
+#tooltip {
+background-color: @bg-panel;
+color: @font-color;
+padding: 4px 8px;
+}
+
+#pulseaudio {
+background-color: @podium;
+color: @font-color;
+padding: 0px 4px;
+margin: 3px 0px 3px 4px;
+border-radius: 12px 0px 0px 12px;
+}
+
+#taskbar {
+background-color: @podium;
+margin: 3px 2px 3px 4px;
+border-radius: 12px;
+}
+
+#taskbar button {
+background-color: @podium;
+color: @font-color;
+padding: 1px 8px;
+margin: 2px 2px;
+border-radius: 12px;
+}
+
+#taskbar button:hover {
+background-color: @butt-hover;
+border-radius: 12px;
+}
+
+#taskbar button.active {
+background-color: @accent;
+margin: 2px 2px;
+border-radius: 12px;
+}
+
+#mpris {
+background-color: @podium;
+color: @accent;
+font-size: 80%;
+padding: 0px 20px 2px 20px;
+margin: 3px 2px;
+border-radius: 12px;
+}
+
+#mpris.paused {
+color: @font-color;
+}
+
+#workspaces {
+background-color: @podium;
+font-size: 80%;
+margin: 3px 5px;
+border-radius: 12px;
+}
+
+#workspaces button {
+background-color: @podium;
+color: @font-color;
+min-width: 30px;
+margin: 2px;
+border-radius: 12px;
+}
+
+#workspaces button.active {
+background-color: @accent;
+color: @font-color-inv;
+min-width: 30px;
+margin: 2px;
+border-radius: 12px;
+}
+
+#workspaces button.empty {
+color: @bg-panel;
+border-radius: 12px;
+}
+
+#tray {
+background-color: @podium;
+color: @font-color;
+padding: 0 4px;
+margin: 3px 5px;
+border-radius: 12px;
+}
+
+#pulseaudio {
+background-color: @podium;
+color: @font-color;
+padding: 0px 5px 0px 10px;
+margin: 3px 0px 3px 0px;
+border-radius: 12px 0px 0px 12px;
+}
+
+#backlight {
+background-color: @podium;
+color: @font-color;
+padding: 0px 10px 0px 5px;
+margin: 3px 0px 3px 0px;
+}
+
+#custom-ddc-brightness {
+background-color: @podium;
+color: @font-color;
+padding: 0px 10px;
+margin: 3px 0px 3px 0px;
+}
+
+#battery {
+background-color: @podium;
+color: @font-color;
+padding: 0px 15px 0px 5px;
+margin: 3px 0px 3px 0px;
+}
+
+#battery.charging {
+color: @accent;
+}
+
+#language {
+background-color: @podium;
+color: @accent;
+padding: 0px 5px 0px 5px;
+margin: 3px 0px 3px 0px;
+min-width: 25px;
+}
+
+#custom-notifications {
+background-color: @podium;
+color: @font-color;
+font-weight: 600;
+padding: 0px 5px 0px 5px;
+margin: 3px 0px 3px 0px;
+}
+
+#clock {
+background-color: @podium;
+color: @font-color;
+padding: 0px 10px 0px 5px;
+margin: 3px 4px 3px 0px;
+border-radius: 0px 12px 12px 0px;
+}
+
+#tray > .passive {
+-gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+-gtk-icon-effect: highlight;
+}
+
+#tray > .passive,
+#tray > .active,
+#tray > .needs-attention,
+#tray > widget > image {
+padding: 0 4px;
+margin: 0;
+min-width: 18px;
+}
+
