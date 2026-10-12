@@ -53,7 +53,7 @@ add_repo packman "https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbl
 OBS="https://download.opensuse.org/repositories"
 add_repo obs-alternateved "${OBS}/home:/alternateved/openSUSE_Tumbleweed/" #adw-gtk3
 add_repo obs-dead-mozay   "${OBS}/home:/Dead_Mozay:/GNOME:/Apps/openSUSE_Tumbleweed/" #gapless
-add_repo obs-holiu0618    "${OBS}/home:/Herbster0815/openSUSE_Tumbleweed/x86_64" # dotnet
+add_repo obs-Herbster0815 "${OBS}/home:/Herbster0815/openSUSE_Tumbleweed/x86_64" # dotnet
 add_repo obs-holiu0618    "${OBS}/home:/Holiu0618/openSUSE_Tumbleweed/" # darkly
 
 zypper -n --gpg-auto-import-keys ref
@@ -67,9 +67,9 @@ zypper -n in --allow-vendor-change \
     git gh btop ddcutil brightnessctl scrcpy dotnet android-tools ffmpeg qemu ovmf playerctl fastfetch seatd fish jq bc \
     NetworkManager NetworkManager-applet \
     pipewire pipewire-pulseaudio pipewire-alsa wireplumber \
-    hyprland hyprlock hyprpaper waybar waypaper wofi polkit SwayNotificationCenter \
+    hyprland hyprlock hyprpaper waybar wofi polkit SwayNotificationCenter \
     fontawesome-fonts google-noto-sans-fonts adwaita-fonts \
-    dolphin pavucontrol-qt foot neovim Gapless vlc pinta krita audacity onlyoffice-desktop-editors FreeCAD inkscape keepassxc anki gnome-disk-utility filelight portprotonqt \
+    dolphin pavucontrol-qt foot neovim Gapless vlc pinta krita audacity FreeCAD inkscape keepassxc gnome-disk-utility filelight portprotonqt \
     adw-gtk3 papirus-icon-theme nwg-look darkly qt5ct qt6ct  \
     xdg-desktop-portal-hyprland xdg-desktop-portal-gtk \
     libqt5-qtwayland qt6-wayland
