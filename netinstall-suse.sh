@@ -64,7 +64,6 @@ zypper -n dup --from packman --allow-vendor-change
 
 # ===== 4. Установка пакетов =====
 zypper -n in --allow-vendor-change \
-    # System
     git gh btop ddcutil brightnessctl scrcpy dotnet android-tools ffmpeg qemu ovmf playerctl fastfetch seatd fish jq bc \
     NetworkManager NetworkManager-applet \
     pipewire pipewire-pulseaudio pipewire-alsa wireplumber \
