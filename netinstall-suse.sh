@@ -5,6 +5,9 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
+# Весь вывод дублируем в лог (если что-то пойдёт не так — смотрите /var/log/netinstall.log)
+exec > >(tee -a /var/log/netinstall.log) 2>&1
+
 # Определяем пользователя автоматически
 USERNAME="${SUDO_USER:-}"
 
@@ -92,7 +95,6 @@ PKGS=(
     dolphin pavucontrol-qt foot neovim Gapless
     vlc vlc-codecs ffmpeg
     pinta krita audacity FreeCAD inkscape keepassxc gnome-disk-utility filelight
-    portprotonqt
     # --- Темы ---
     adw-gtk3 papirus-icon-theme nwg-look darkly qt5ct qt6ct
     # --- Порталы и Wayland ---
@@ -102,11 +104,22 @@ PKGS=(
 
 # Пакеты, которых, вероятно, нет в репозиториях (нужен отдельный OBS-репозиторий)
 UNVERIFIED_PKGS=(
-
+    portprotonqt
 )
 
-zypper -n in --allow-vendor-change "${PKGS[@]}"
-zypper -n in --allow-vendor-change "${UNVERIFIED_PKGS[@]}"
+# Если одна проблема (конфликт/отсутствующий пакет) отменяет всю транзакцию,
+# ставим пакеты по одному, чтобы остальное всё равно установилось
+install_pkgs() {
+    zypper -n in --allow-vendor-change "$@" && return 0
+    echo "!! Групповая установка не удалась, ставлю по одному пакету"
+    local p
+    for p in "$@"; do
+        zypper -n in --allow-vendor-change "$p" || true
+    done
+}
+
+install_pkgs "${PKGS[@]}"
+install_pkgs "${UNVERIFIED_PKGS[@]}"
 
 # Проверка: что из списка реально установилось (имя без учёта регистра)
 INSTALLED_NAMES="$(rpm -qa --qf '%{NAME}\n')"
@@ -136,14 +149,14 @@ EOT
 
 # ===== 7. Группы и сервисы =====
 usermod -aG video,input $USERNAME
-usermod -aG seat $USERNAME
+getent group seat >/dev/null && usermod -aG seat $USERNAME
 getent group kvm >/dev/null && usermod -aG kvm $USERNAME
 
-systemctl enable seatd
-systemctl disable wicked
+systemctl list-unit-files seatd.service >/dev/null 2>&1 && systemctl enable seatd
+systemctl list-unit-files wicked.service 2>/dev/null | grep -q wicked && systemctl disable wicked
 systemctl enable NetworkManager
 
-chsh -s /usr/bin/fish $USERNAME
+[[ -x /usr/bin/fish ]] && chsh -s /usr/bin/fish $USERNAME
 
 # ===== Итог =====
 if ((${#FAILED[@]})); then
