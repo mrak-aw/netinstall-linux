@@ -110,11 +110,11 @@ UNVERIFIED_PKGS=(
 # Если одна проблема (конфликт/отсутствующий пакет) отменяет всю транзакцию,
 # ставим пакеты по одному, чтобы остальное всё равно установилось
 install_pkgs() {
-    zypper -n in --allow-vendor-change "$@" && return 0
+    zypper -n in --allow-vendor-change -l "$@" && return 0
     echo "!! Групповая установка не удалась, ставлю по одному пакету"
     local p
     for p in "$@"; do
-        zypper -n in --allow-vendor-change "$p" || true
+        zypper -n in --allow-vendor-change -l "$p" || true
     done
 }
 
