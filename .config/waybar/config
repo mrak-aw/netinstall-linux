@@ -9,9 +9,9 @@
     "layer": "overlay",
     "spacing": 0,
 
-    "modules-left": ["wlr/taskbar", "mpris",],
+    "modules-left": ["custom/brightness", "wlr/taskbar", "mpris",],
     "modules-center": ["ext/workspaces"],
-    "modules-right": ["tray", "pulseaudio", "backlight", "custom/ddc-brightness", "battery", "custom/notifications", "hyprland/language", "clock", "custom/right"],
+    "modules-right": ["tray", "pulseaudio", "backlight", "custom/ddc-brightness", "battery", "custom/notifications", "hyprland/language", "clock", "custom/volume"],
 
     "wlr/taskbar": {
         "format": "{icon}",
@@ -22,8 +22,9 @@
     "ext/workspaces": {
         "format": "{icon}",
         "sort-by-number": true,
-        "on-click": "activate",
         "all-outputs": true,
+        "on-click": "activate",
+        "on-click-right": "pkill wofi || wofi --show drun",
         "on-scroll-up": "hyprctl eval 'hl.dispatch(hl.dsp.focus{workspace=\"+1\"})'",
         "on-scroll-down": "hyprctl eval 'hl.dispatch(hl.dsp.focus{workspace=\"-1\"})'",
     },
@@ -55,7 +56,9 @@
         "format-icons": {
             "default": ["\uf027", "\uf6a8", "\uf028"]
         },
-        "on-click": "pavucontrol-qt"
+        "on-click":        "pavucontrol-qt",
+        "on-click-middle": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+
     },
 
     "backlight": {
@@ -105,5 +108,23 @@
         "format-plugged": "\uf1e6 {capacity}%",
         "format-alt": "{icon} {time}",
         "format-icons": ["\uf244", "\uf243", "\uf242", "\uf241", "\uf240",]
+    },
+
+        "custom/volume": {
+        "format": " ",
+        "tooltip": true,
+        "tooltip-format": "Scroll to add volume",
+        "on-scroll-up":   "wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+",
+        "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-",
+        "on-click":       "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+    },
+
+    "custom/brightness": {
+        "format": " ",
+        "tooltip": true,
+        "tooltip-format": "Scroll to add brightness",
+        "on-scroll-up":   "brightnessctl set +10%",
+        "on-scroll-down": "brightnessctl set 10%-"
     }
 }
+

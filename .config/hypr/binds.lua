@@ -7,12 +7,18 @@ hl.bind(mainMod .. " + E", hl.dsp.window.fullscreen())
 
 hl.bind(mainMod .. " + SHIFT + W", function()
 hl.dispatch(hl.dsp.window.float({ action = "toggle" }))
-hl.dispatch(hl.dsp.window.resize({ x = 750, y = 500, relative = false }))
+local mon = hl.get_active_monitor()
+local w = math.floor(mon.width  / mon.scale * 0.60)
+local h = math.floor(mon.height / mon.scale * 0.65)
+hl.dispatch(hl.dsp.window.resize({ x = w, y = h, relative = false }))
 end)
 
 hl.bind(mainMod .. " + CTRL + W", function()
 hl.dispatch(hl.dsp.window.float({ action = "toggle" }))
-hl.dispatch(hl.dsp.window.resize({ x = 500, y = 660, relative = false }))
+local mon = hl.get_active_monitor()
+local w = math.floor(mon.width  / mon.scale * 0.35)
+local h = math.floor(mon.height / mon.scale * 0.85)
+hl.dispatch(hl.dsp.window.resize({ x = w, y = h, relative = false }))
 end)
 
 hl.bind(mainMod .. " + left",  hl.dsp.focus({ direction = "left" }))
@@ -36,8 +42,10 @@ hl.bind(mainMod .. " + F", hl.dsp.exec_cmd(Apps.fileManager))
 
 -- ===== SHELL =====
 hl.bind(mainMod .. " + M", hl.dsp.exit())
-hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("swaync-client --toggle-panel"))
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(Apps.menu))
+hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("swaync-client --toggle-panel"))
+hl.bind(mainMod .. " + J", hl.dsp.exec_cmd("pkill -SIGUSR1 waybar"))
+hl.bind(mainMod .. " + grave", hl.dsp.exec_cmd(Apps.wallpaper))
 
 -- ===== WORKSPACES =====
 hl.bind(mainMod .. " + Z", hl.dsp.focus({ workspace = "-1" }))

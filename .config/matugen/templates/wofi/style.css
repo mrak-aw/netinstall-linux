@@ -6,8 +6,6 @@
 @define-color butt-hover    {{colors.surface_variant.default.hex}};
 
 * {
-    unset: all;
-    font-family: "Adwaita Sans";
     outline: none;
 }
 
@@ -21,13 +19,12 @@ window {
 
 /* Ввод */
 #input {
-margin: 8px;
-padding: 0px 10px 0px 10px;
+margin: 10px;
+padding: 4px 10px;
 border: none;
 border-radius: 8px;
 background-color: @podium;
 color: @font-color;
-font-size: 14px;
 }
 
 
@@ -38,7 +35,7 @@ border-radius: 12px;
 
 /* Основные контейнеры */
 #inner-box {
-margin: 6px;
+margin: 8px;
 background: transparent;
 background-color: transparent;
 border-radius: 12px;
@@ -76,7 +73,6 @@ scrollbar slider:active {
 #text {
 margin: 6px;
 color: @font-color;
-font-size: 14px;
 }
 
 #entry {

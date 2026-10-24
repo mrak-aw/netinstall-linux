@@ -6,22 +6,23 @@ hl.monitor({
     scale    = "auto",
 })
 
--- ===== ЦВЕТА (генерируются matugen, см. colors.lua) =====
-require("colors")
-
--- ===== USER APPS =====
 Apps = {
     terminal    = "foot",
     fileManager = "dolphin",
-    browser     = "firefox",
-    messenger   = "Telegram",
+    browser     = "helium || librewolf",
+    messenger   = "",
     menu        = "pkill wofi || wofi --show drun",
+    wallpaper   = "pkill wofi || ~/.config/wofi/wallpaper-switcher/start.sh",
 }
+
+require("colors")
+require("rules")
+require("binds")
 
 -- ===== ENVIRONMENT VARIABLES =====
 hl.env("LANG", "en_US.UTF-8")
 hl.env("LC_MESSAGES", "en_US.UTF-8")
-hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")   -- было задано дважды (qt5ct + qt6ct) - оставил одно рабочее значение
+hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
 hl.env("XCURSOR_THEME", "Adwaita")
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
@@ -32,12 +33,11 @@ hl.env("MOZ_ENABLE_WAYLAND", "1")
 
 -- ===== AUTOSTART =====
 hl.on("hyprland.start", function()
-hl.exec_cmd(Apps.terminal)
-hl.exec_cmd("hyprpaper")
+hl.exec_cmd("swww-daemon")
 hl.exec_cmd("waybar")
-hl.exec_cmd("waypaper --restore")
-hl.exec_cmd("/usr/libexec/polkit-gnome-authentication-agent-1")
 hl.exec_cmd("nm-applet")
+hl.exec_cmd(Apps.terminal)
+hl.exec_cmd("/usr/libexec/polkit-gnome-authentication-agent-1")
 end)
 
 -- ===== LOOK AND FEEL =====
@@ -45,13 +45,13 @@ hl.config({
     general = {
         gaps_in = 1,
         gaps_out = 1,
-        border_size = 2,
+        border_size = 1,
         resize_on_border = false,
         allow_tearing = false,
         layout = "dwindle",
     },
     decoration = {
-        rounding = 12,
+        rounding = 8,
         rounding_power = 2,
         active_opacity = 1,
         shadow = { enabled = true, range = 20, offset = {0, 2}, render_power = 10, color = "rgba(00000020)" },
@@ -97,7 +97,7 @@ hl.config({
 -- ===== INPUT =====
 hl.config({
     input = {
-        kb_layout    = "us,ru",
+        kb_layout    = "us,ru,ua",
         kb_options   = "grp:caps_toggle",
         follow_mouse = 1,
         sensitivity  = 0.38,
@@ -109,27 +109,3 @@ hl.config({
 hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })
 
 hl.device({ name = "epic-mouse-v1", sensitivity = -0.5 })
-
--- ===== WINDOW RULES =====
-local rules = {
-    { class = "^(firefox)$",                       size = "1300 650" },
-    { class = "^(Thunar)$",                         size = "760 660" },
-    { class = "^(org%.telegram%.desktop)$",         size = "500 690" },
-    { class = "^(waypaper)$",                       size = "50 600" },
-    { class = "^(nwg%-look)$",                      size = "950 600" },
-    { class = "^(com%.github%.neithern%.g4music)$", size = "770 630" },
-    { class = "^(org%.gnome%.eog)$",                size = "750 550" },
-    { class = "^(PortProton)$",                     size = "900 600" },
-}
-
-for i, r in ipairs(rules) do
-    hl.window_rule({
-        name  = "float-" .. i,
-        match = { class = r.class },
-        size  = r.size,
-        float = true,
-    })
-    end
-
-    -- ===== KEYBINDS =====
-    require("binds")

@@ -1,7 +1,7 @@
-width=350px
-height=600px
+width=400px
+height=650px
 location=center
-show=drun
+show=dmenu
 columns=1
 no_actions=true
 prompt=Search...
@@ -18,3 +18,4 @@ image_size=32
 gtk_dark=false
 layer=overlay
 term=foot
+line_wrap=word_char

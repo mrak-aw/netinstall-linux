@@ -205,6 +205,25 @@ margin: 3px 4px 3px 0px;
 border-radius: 0px 12px 12px 0px;
 }
 
+#custom-brightness {
+background-color: @podium;
+margin: 3px 0px 3px 0px;
+border-radius: 0px 12px 12px 0px;
+min-width: 4px;
+}
+
+#custom-volume {
+background-color: @podium;
+margin: 3px 0px 3px 0px;
+border-radius: 12px 0px 0px 12px;
+min-width: 4px;
+}
+
+#custom-volume:hover,
+#custom-brightness:hover {
+background-color: @butt-hover;
+}
+
 #tray > .passive {
 -gtk-icon-effect: dim;
 }

@@ -1,12 +1,11 @@
-@define-color bg-panel      #141318;
-@define-color font-color    #e6e1e9;
-@define-color font-color-inv #141318;
-@define-color podium        #2b292f;
-@define-color accent        #cabeff;
-@define-color butt-hover    #48454e;
+@define-color bg-panel      #101417;
+@define-color font-color    #e0e3e8;
+@define-color font-color-inv #101417;
+@define-color podium        #262a2e;
+@define-color accent        #97ccf9;
+@define-color butt-hover    #41474d;
 
 * {
-    unset: all;
     outline: none;
 }
 
@@ -20,8 +19,8 @@ window {
 
 /* Ввод */
 #input {
-margin: 8px;
-padding: 0px 10px 0px 10px;
+margin: 10px;
+padding: 4px 10px;
 border: none;
 border-radius: 8px;
 background-color: @podium;
@@ -36,7 +35,7 @@ border-radius: 12px;
 
 /* Основные контейнеры */
 #inner-box {
-margin: 6px;
+margin: 8px;
 background: transparent;
 background-color: transparent;
 border-radius: 12px;

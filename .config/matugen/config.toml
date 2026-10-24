@@ -11,7 +11,7 @@ output_path = "~/.config/gtk-4.0/gtk.css"
 
 [templates.kde]
 input_path = "~/.config/matugen/templates/kde/breeze.colors"
-output_path = "~/.local/share/color-schemes/BreezeDarkMaterial.colors"
+output_path = "~/.local/share/color-schemes/matugen.colors"
 
 [templates.kdeglobals]
 input_path = '~/.config/matugen/templates/kde/breeze.colors'
@@ -37,6 +37,7 @@ post_hook = "hyprctl reload"
 [templates.hyprpaper]
 input_path = "~/.config/matugen/templates/hyprland/hyprpaper.conf"
 output_path = "~/.config/hypr/hyprpaper.conf"
+post_hook = "pkill hyprpaper; hyprpaper"
 
 [templates.swaync]
 input_path = "~/.config/matugen/templates/swaync/colors.css"
@@ -51,6 +52,10 @@ post_hook = "pkill -SIGUSR2 waybar"
 [templates.wofi]
 input_path = "~/.config/matugen/templates/wofi/style.css"
 output_path = "~/.config/wofi/style.css"
+
+[templates.wofi-wallpaper-switcher]
+input_path = "~/.config/matugen/templates/wofi/wallpaper-switcher.css"
+output_path = "~/.config/wofi/wallpaper-switcher/style.css"
 
 [templates.foot]
 input_path = "~/.config/matugen/templates/foot/colors.ini"
