@@ -34,11 +34,6 @@ input_path = '~/.config/matugen/templates/hyprland/colors.lua'
 output_path = '~/.config/hypr/colors.lua'
 post_hook = "hyprctl reload"
 
-[templates.hyprpaper]
-input_path = "~/.config/matugen/templates/hyprland/hyprpaper.conf"
-output_path = "~/.config/hypr/hyprpaper.conf"
-post_hook = "pkill hyprpaper; hyprpaper"
-
 [templates.swaync]
 input_path = "~/.config/matugen/templates/swaync/colors.css"
 output_path = "~/.config/swaync/colors.css"

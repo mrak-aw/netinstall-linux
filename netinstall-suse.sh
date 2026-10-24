@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-# ============================================================
-#  Конфигурация
-# ============================================================
-
 LOG_FILE=/var/log/netinstall.log
 SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
@@ -44,7 +40,7 @@ FLATPAKS=(
     com.vscodium.codium
 )
 
-EXTRA_GROUPS=(video render input audio kvm i2c adbusers seat _seatd)
+EXTRA_GROUPS=(video render input audio kvm )
 
 FAILED=()
 
