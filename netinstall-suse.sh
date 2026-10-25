@@ -16,23 +16,22 @@ PKGS=(
     # --- Bluetooth ---
     bluez bluez-auto-enable-devices
     # --- Hyprland ---
-    hyprland hyprlock awww waybar wofi polkit xwayland matugen SwayNotificationCenter
+    hyprland hyprlock hyprshot hypridle awww waybar wofi polkit polkit-gnome xwayland matugen SwayNotificationCenter
     # --- Шрифты ---
     fontawesome-fonts google-noto-sans-fonts adwaita-fonts
     # --- Приложения ---
     vlc vlc-codecs ffmpeg
     helium-browser librewolf
     portprotonqt legacy-launcher
-    dolphin pavucontrol-qt foot neovim kate Gapless
-    gwenview krita audacity inkscape keepassxc gnome-disk-utility filelight
+    dolphin pavucontrol-qt foot neovim kate Gapless obsidian localsend
+    gwenview krita audacity inkscape keepassxc gnome-disk-utility filelight qbittorrent papers
     # --- Темы ---
     adw-gtk3 papirus-icon-theme nwg-look darkly qt5ct qt6ct
     # --- Порталы и Wayland ---
     xdg-desktop-portal-hyprland xdg-desktop-portal-gtk
     libqt5-qtwayland qt6-wayland typelib-1_0-Gtk-3_0
-    ffmpegthumbs
-    wl-clipboard cliphist
-
+    wl-clipboard cliphist grim slurp satty swappy libnotify-tools
+    kio-extras ffmpegthumbs
 )
 
 FLATPAKS=(
@@ -40,9 +39,10 @@ FLATPAKS=(
     com.vscodium.codium
 )
 
-EXTRA_GROUPS=(video render input audio kvm )
+EXTRA_GROUPS=(video render input audio kvm i2c)
 
 FAILED=()
+UNAVAILABLE=()   # пакеты, которых нет ни в одном репозитории
 
 setup_all_repos() {
 add_repo packman "https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/" 90
@@ -53,7 +53,7 @@ add_repo obs-dead-mozay   "${OBS}/home:/Dead_Mozay:/GNOME:/Apps/openSUSE_Tumblew
 add_repo obs-herbster0815 "${OBS}/home:/Herbster0815/openSUSE_Tumbleweed/"              # dotnet
 add_repo obs-holiu0618    "${OBS}/home:/Holiu0618/openSUSE_Tumbleweed/"                 # darkly
 add_repo obs-hardware     "${OBS}/hardware/openSUSE_Tumbleweed/"                        # scrcpy
-add_repo obs-ackerman     "${OBS}/home:/ackerman/openSUSE_Tumbleweed/"                  # matugen / helium-browser
+add_repo obs-ackerman     "${OBS}/home:/ackerman/openSUSE_Tumbleweed/"                  # matugen / helium-browser / obsidian / localsend
 add_repo legacy-launcher  "${OBS}/home:/tekidev/openSUSE_Tumbleweed/"                   # ch.tlaun.TL
 add_repo_file throne      "https://parhelia512.github.io/throne-sle.repo"               # throne
 add_repo_file librewolf   "https://repo.librewolf.net/librewolf.repo"                   # librewolf
@@ -137,7 +137,7 @@ configure_zypper() {
     fi
 
     sed -i '/^solver.onlyRequires/d' "$conf"
-    sed -i '0,/^\[main\]/s//[main]\nsolver.onlyRequires = false/' "$conf"
+    sed -i '0,/^\[main\]/s//[main]\nsolver.onlyRequires = true/' "$conf"
 
     fix_selinux "$conf"
 }
@@ -198,13 +198,38 @@ system_update() {
 #  4. Пакеты
 # ============================================================
 
-install_packages() {
-    local rc
+# Есть ли пакет (или capability) в подключённых репозиториях
+pkg_provided() {
+    zypper -n -q search -x --provides "$1" >/dev/null 2>&1
+}
 
-    log "Установка пакетов"
-    zypper -n in --allow-vendor-change "${PKGS[@]}"
+install_packages() {
+    local p rc found
+    local avail=()
+
+    # Один неизвестный пакет заставляет `zypper in` (код 104) отменить ВСЮ установку,
+    # поэтому сначала отсеиваем то, чего нет в репозиториях.
+    log "Проверка наличия пакетов в репозиториях"
+    found=$(zypper -n --xmlout search -x -t package "${PKGS[@]}" 2>/dev/null \
+            | grep -oP '<solvable [^>]*\bname="\K[^"]+' | sort -u)
+
+    for p in "${PKGS[@]}"; do
+        if grep -qixF "$p" <<<"$found" || pkg_provided "$p"; then
+            avail+=("$p")
+        else
+            UNAVAILABLE+=("$p")
+            fail "Пакет $p не найден в репозиториях, пропускаю" "$p (нет в репозиториях)"
+        fi
+    done
+
+    log "Установка пакетов (${#avail[@]} шт.)"
+    zypper -n in --allow-vendor-change "${avail[@]}"
     rc=$?
     log "zypper in завершился с кодом $rc"
+
+    if (( rc != 0 )); then
+        warn "zypper in завершился с ошибкой (код $rc), смотрите лог: $LOG_FILE"
+    fi
 
     if zypper lr packman >/dev/null 2>&1; then
         log "Переключение мультимедиа-пакетов на Packman"
@@ -217,6 +242,7 @@ verify_packages() {
     installed=$(rpm -qa --qf '%{NAME}\n')
 
     for p in "${PKGS[@]}"; do
+        [[ " ${UNAVAILABLE[*]} " == *" $p "* ]] && continue
         grep -qixF "$p" <<<"$installed" \
             || rpm -q --whatprovides "$p" >/dev/null 2>&1 \
             || FAILED+=("$p (не установился)")
@@ -252,6 +278,10 @@ copy_configs() {
     mkdir -p "$USER_HOME/.config"
     cp -rT "$SCRIPT_DIR/.config" "$USER_HOME/.config"
     chown -R "$USERNAME:$USER_GROUP" "$USER_HOME/.config"
+
+    # В qt5ct/qt6ct путь к цветам зашит с чужим именем пользователя
+    sed -i -E "s#/home/[^/]+/\.config#$USER_HOME/.config#g" \
+        "$USER_HOME/.config/qt5ct/qt5ct.conf" "$USER_HOME/.config/qt6ct/qt6ct.conf" 2>/dev/null || true
 
     if [[ -f $btusb ]]; then
         install -Dm644 "$btusb" /etc/modprobe.d/btusb-fix.conf
@@ -318,6 +348,14 @@ EOT
 setup_i2c() {
     echo i2c-dev > /etc/modules-load.d/i2c-dev.conf
     modprobe i2c-dev 2>/dev/null || warn "Не удалось загрузить модуль i2c-dev"
+
+    # Доступ к /dev/i2c-* для ddcutil без root (как на NixOS)
+    getent group i2c >/dev/null || groupadd -r i2c
+    cat > /etc/udev/rules.d/60-i2c-group.rules <<'EOT'
+KERNEL=="i2c-[0-9]*", GROUP="i2c", MODE="0660"
+EOT
+    udevadm control --reload 2>/dev/null || true
+    udevadm trigger --subsystem-match=i2c-dev 2>/dev/null || true
 }
 
 setup_groups() {
@@ -329,6 +367,16 @@ setup_groups() {
             log "Группы $g нет в системе, пропускаю"
         fi
     done
+}
+
+setup_lid() {
+    install -d /etc/systemd/logind.conf.d
+    cat > /etc/systemd/logind.conf.d/10-lid.conf <<'EOT'
+[Login]
+HandleLidSwitch=ignore
+HandleLidSwitchExternalPower=ignore
+HandleLidSwitchDocked=ignore
+EOT
 }
 
 setup_services() {
@@ -376,6 +424,7 @@ main() {
     setup_hyprland_autostart
     setup_i2c
     setup_groups
+    setup_lid
     setup_services
 
     print_summary

@@ -82,7 +82,8 @@
     "hyprland/language": {
         "format": "{}",
         "format-en": "EN",
-        "format-ru": "RU"
+        "format-ru": "RU",
+        "format-ru": "UK"
     },
 
     "custom/notifications": {

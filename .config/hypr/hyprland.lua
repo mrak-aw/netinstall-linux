@@ -10,7 +10,7 @@ Apps = {
     terminal    = "foot",
     fileManager = "dolphin",
     browser     = "helium || librewolf",
-    messenger   = "",
+    messenger   = "flatpak run io.github.kukuruzka165.materialgram",
     menu        = "pkill wofi || wofi --show drun",
     wallpaper   = "pkill wofi || ~/.config/wofi/wallpaper-switcher/start.sh",
 }
@@ -36,6 +36,9 @@ hl.on("hyprland.start", function()
 hl.exec_cmd("awww-daemon")
 hl.exec_cmd("waybar")
 hl.exec_cmd("nm-applet")
+hl.exec_cmd("hypridle")
+hl.exec_cmd("wl-paste --type text --watch cliphist store")
+hl.exec_cmd("wl-paste --type image --watch cliphist store")
 hl.exec_cmd(Apps.terminal)
 hl.exec_cmd("/usr/libexec/polkit-gnome-authentication-agent-1")
 end)
@@ -55,7 +58,7 @@ hl.config({
         rounding_power = 2,
         active_opacity = 1,
         shadow = { enabled = true, range = 20, offset = {0, 2}, render_power = 10, color = "rgba(00000020)" },
-        blur   = { enabled = true, size = 3, passes = 4, vibrancy = 0.1696 },
+          blur   = { enabled = true, size = 3, passes = 4, vibrancy = 0.1696 },
     },
     animations = { enabled = 0 },
 
@@ -100,7 +103,7 @@ hl.config({
         kb_layout    = "us,ru,ua",
         kb_options   = "grp:caps_toggle",
         follow_mouse = 1,
-        sensitivity  = 0.38,
+        sensitivity  = 0,
         touchpad = { natural_scroll = true },
     },
     cursor = { no_warps = true },

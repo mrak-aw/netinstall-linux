@@ -4,8 +4,8 @@
 hl.window_rule({match = {class = "^(helium)$" },                             float = true})
 hl.window_rule({match = {class = "^(helium)$" },                             size = {"(monitor_w*0.9)", "(monitor_h*0.85)"} })
 
-hl.window_rule({match = {class = "^(firefix)$" },                             float = true})
-hl.window_rule({match = {class = "^(firefix)$" },                             size = {"(monitor_w*0.9)", "(monitor_h*0.85)"} })
+hl.window_rule({match = {class = "^(firefox)$" },                             float = true})
+hl.window_rule({match = {class = "^(firefox)$" },                             size = {"(monitor_w*0.9)", "(monitor_h*0.85)"} })
 
 hl.window_rule({match = {class = "^(librewolf)$" },                             float = true})
 hl.window_rule({match = {class = "^(librewolf)$" },                             size = {"(monitor_w*0.9)", "(monitor_h*0.85)"} })
@@ -66,7 +66,6 @@ hl.window_rule({match = {class = ".*plasmawindowed.*" },                     flo
 hl.window_rule({match = {class = "kcm_.*" },                                  float = true})
 hl.window_rule({match = {class = ".*bluedevilwizard" },                      float = true})
 hl.window_rule({match = {title = ".*Welcome" },                              float = true})
-hl.window_rule({match = {title = "^(illogical-impulse Settings)$" },         float = true})
 hl.window_rule({match = {title = ".*Shell conflicts.*" },                    float = true})
 hl.window_rule({match = {class = "org.freedesktop.impl.portal.desktop.kde" }, float = true})
 hl.window_rule({match = {class = "org.freedesktop.impl.portal.desktop.kde" }, size = {"(monitor_w*0.60)", "(monitor_h*0.65)"} })
@@ -87,7 +86,6 @@ hl.window_rule({match = {title = "^([Pp]icture[-\\s]?[Ii]n[-\\s]?[Pp]icture)(.*)
 hl.window_rule({match = {title = "^([Pp]icture[-\\s]?[Ii]n[-\\s]?[Pp]icture)(.*)$" }, keep_aspect_ratio = true})
 hl.window_rule({match = {title = "^([Pp]icture[-\\s]?[Ii]n[-\\s]?[Pp]icture)(.*)$" }, move = {"(monitor_w*0.73)", "(monitor_h*0.72)"} })
 hl.window_rule({match = {title = "^([Pp]icture[-\\s]?[Ii]n[-\\s]?[Pp]icture)(.*)$" }, size = {"(monitor_w*0.25)", "(monitor_h*0.25)"} })
-hl.window_rule({match = {title = "^([Pp]icture[-\\s]?[Ii]n[-\\s]?[Pp]icture)(.*)$" }, float = true})
 hl.window_rule({match = {title = "^([Pp]icture[-\\s]?[Ii]n[-\\s]?[Pp]icture)(.*)$" }, pin = true})
 
 -- Screen sharing
